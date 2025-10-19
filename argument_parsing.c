@@ -3,21 +3,40 @@
 
 int	argument_parsing(int argc, char *infile, char *limiter, char *outfile)
 {
-	infile_handler(infile, limiter);
+	t_fd *file_fd;
+	t_comands *cmds;
+	int	nb_cmd;
+
+	file_fd = get_fd();
+	nb_cmd = infile_handler(infile, limiter, argc);
+	if (!nb_cmd)
+		return (0);
+	cmds = ft_calloc(nb_cmd, sizeof(t_comands));
+	if (!cmds)
+		return (0);
 	outfile_handler(outfile);
+	get_line(file_fd->infile_fd);
 	command_handler();
 }
+void	get_line(int fd)
+{
 
-int	infile_handler(char *infile, char *limiter)
+}
+
+static int	infile_handler(char *infile, char *limiter, int argc)
 {
 	t_fd *file_fd;
+	int	nb_cmd;
 	int	fd;
 	int	i;
 
 	file_fd = get_fd();
 	i = ft_strncmp(infile, "here_doc", 8);
 	if (i == 0)
+	{
+		nb_cmd = argc - 4;
 		heredoc_handler(limiter);
+	}
 	else
 	{
 		fd = open(infile, O_RDONLY);
@@ -26,8 +45,10 @@ int	infile_handler(char *infile, char *limiter)
 			perror("Cannot access infile");
 			EXIT_FAILURE;
 		}
+		nb_cmd = argc - 3;
 	}
 	file_fd->infile_fd = fd;
+	return (nb_cmd);
 }
 
 void	outfile_handler(char *outfile)
@@ -44,3 +65,4 @@ void	outfile_handler(char *outfile)
 	}
 	file_fd->outfile_fd = fd;
 }
+

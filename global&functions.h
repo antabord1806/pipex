@@ -8,6 +8,10 @@
 #include <stdio.h>
 #include <structs.h>
 
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 10
+#endif
+
 void    env_init(char **environment);
 t_fd    *get_fd(void);
 char    **get_env(void *env);
