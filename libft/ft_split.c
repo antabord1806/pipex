@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          #+#  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: antabord <antabord@student.42.fr>          #+#  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2025-04-23 14:52:10 by antabord          #+#    #+#             */
 /*   Updated: 2025-04-23 14:52:10 by antabord         ###   ########.fr       */
 /*                                                                            */
@@ -25,30 +28,29 @@ static void	ft_free_all(char **arr_aloc)
 	free(arr_aloc);
 }
 
-static size_t ft_count_words(char const *s, char c)
+static size_t	ft_count_words(char const *s, char c)
 {
-    size_t i = 0;
+	size_t	i;
 
-    if (!s)
-        return 0;
-
-    while (*s)
-    {
-        while (*s == c)
-            s++;
-        if (*s && *s != c)
-            i++;
-        while (*s && *s != c)
-            s++;
-    }
-    return i;
+	i = 0;
+	if (!s)
+		return (0);
+	while (*s)
+	{
+		while (*s == c)
+			s++;
+		if (*s && *s != c)
+			i++;
+		while (*s && *s != c)
+			s++;
+	}
+	return (i);
 }
-
 
 static int	ft_str_fill(char **arr_aloc, char const *s, char c)
 {
-	size_t	len;
-	int		i;
+	size_t		len;
+	int			i;
 
 	i = 0;
 	while (*s)
@@ -75,8 +77,8 @@ static int	ft_str_fill(char **arr_aloc, char const *s, char c)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	nwords;
-	char	**arr_aloc;
+	size_t		nwords;
+	char		**arr_aloc;
 
 	if (!s)
 		return (NULL);
@@ -93,20 +95,3 @@ char	**ft_split(char const *s, char c)
 		arr_aloc[nwords] = NULL;
 	return (arr_aloc);
 }
-
-/* 
-int	main(int ac, char *av[])
-{
-	int	i = 0;
-	char **f = ft_split(av[1], av[2][0]);
-	if (ac == 3)
-	{
-		while (f[i])
-		{
-			printf("%s\n", f[i]);
-			i++;
-		}
-		free(f);
-	}
-	return (0);
-} */

@@ -3,32 +3,56 @@
 
 int	argument_parsing(int argc, char *infile, char *limiter, char *outfile)
 {
-	t_fd *file_fd;
-	t_comands *cmds;
-	int	nb_cmd;
+	t_fd	*file_fd;
+	t_comands **comands;
+	int		nb_cmd;
 
 	file_fd = get_fd();
+
 	nb_cmd = infile_handler(infile, limiter, argc);
 	if (!nb_cmd)
 		return (0);
-	cmds = ft_calloc(nb_cmd, sizeof(t_comands));
-	if (!cmds)
-		return (0);
+	init_comand(nb_cmd);
 	outfile_handler(outfile);
-	get_line(file_fd->infile_fd);
+	infile_reader(file_fd->infile_fd, get_comand());
 	command_handler();
 }
-void	get_line(int fd)
+void	infile_reader(int fd, t_comands **cmd)
 {
+	int			bytes_read;
+	static char	buffer[BUFFER_SIZE + 1];
+	char		*tmp;
+	char		*old_tmp;
+	int			i;
 
+	i = 0;
+	tmp = NULL;
+	bytes_read = 1;
+	while (bytes_read > 0)
+	{
+		old_tmp = tmp;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read < 0)
+			return (free(tmp));
+		buffer[bytes_read] = '\0';
+		tmp = ft_strjoin(tmp, buffer);
+		free(old_tmp);
+		if (ft_strchr_modded(tmp, '\n'))
+		{
+			(*cmd)->args[i++] = tmp;
+			break;
+		}
+	}
+	if (!tmp || !(*tmp))
+		return (free(tmp));
 }
 
 static int	infile_handler(char *infile, char *limiter, int argc)
 {
-	t_fd *file_fd;
-	int	nb_cmd;
-	int	fd;
-	int	i;
+	t_fd	*file_fd;
+	int		nb_cmd;
+	int		fd;
+	int		i;
 
 	file_fd = get_fd();
 	i = ft_strncmp(infile, "here_doc", 8);
@@ -53,8 +77,8 @@ static int	infile_handler(char *infile, char *limiter, int argc)
 
 void	outfile_handler(char *outfile)
 {
-	int	fd;
-	t_fd *file_fd;
+	int		fd;
+	t_fd	*file_fd;
 
 	file_fd = get_fd();
 	fd = open(outfile, O_WRONLY);
@@ -65,4 +89,3 @@ void	outfile_handler(char *outfile)
 	}
 	file_fd->outfile_fd = fd;
 }
-

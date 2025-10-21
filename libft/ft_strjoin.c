@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2025/04/19 17:47:50 by marvin            #+#    #+#             */
 /*   Updated: 2025/04/19 17:47:50 by marvin           ###   ########.fr       */
@@ -15,7 +15,7 @@
 
 #include "libft.h"
 
-char *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
 	int		len1;
@@ -26,12 +26,22 @@ char *ft_strjoin(char *s1, char *s2)
 	j = 0;
 	i = 0;
 	if (!s2)
-			return NULL;
+		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	result = malloc(len1 + len2 + 1);
 	if (!result)
-		return NULL;
+		return (NULL);
+	return (ft_strjoin_2(s1, s2, result));
+}
+
+char	*ft_strjoin_2(char *s1, char *s2, char *result)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
 	if (s1)
 	{
 		while (s1[i])
@@ -51,12 +61,3 @@ char *ft_strjoin(char *s1, char *s2)
 	result[j] = '\0';
 	return (result);
 }
-
-
-/*int	main(void)
-{
-	char s1[] = "ola tudo bem";
-	char s2[] = "adeus tudo mal";
-	printf("%s\n", ft_strjoin(s1, s2));
-	return (0);
-}*/

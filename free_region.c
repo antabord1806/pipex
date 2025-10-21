@@ -1,18 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                   :+:      :+:    :+:   */
+/*   free_region.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          #+#  +:+       +#+        */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-22 19:10:58 by antabord          #+#    #+#             */
-/*   Updated: 2025-04-22 19:10:58 by antabord         ###   ########.fr       */
+/*   Created: 2025/10/21 13:40:57 by antabord          #+#    #+#             */
+/*   Updated: 2025/10/21 13:41:33 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "global&functions.h"
+#include "structs.h"
 
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
