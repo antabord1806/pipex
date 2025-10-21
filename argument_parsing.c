@@ -12,39 +12,10 @@ int	argument_parsing(int argc, char *infile, char *limiter, char *outfile)
 	nb_cmd = infile_handler(infile, limiter, argc);
 	if (!nb_cmd)
 		return (0);
+	
 	init_comand(nb_cmd);
 	outfile_handler(outfile);
-	infile_reader(file_fd->infile_fd, get_comand());
 	command_handler();
-}
-void	infile_reader(int fd, t_comands **cmd)
-{
-	int			bytes_read;
-	static char	buffer[BUFFER_SIZE + 1];
-	char		*tmp;
-	char		*old_tmp;
-	int			i;
-
-	i = 0;
-	tmp = NULL;
-	bytes_read = 1;
-	while (bytes_read > 0)
-	{
-		old_tmp = tmp;
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
-			return (free(tmp));
-		buffer[bytes_read] = '\0';
-		tmp = ft_strjoin(tmp, buffer);
-		free(old_tmp);
-		if (ft_strchr_modded(tmp, '\n'))
-		{
-			(*cmd)->args[i++] = tmp;
-			break;
-		}
-	}
-	if (!tmp || !(*tmp))
-		return (free(tmp));
 }
 
 static int	infile_handler(char *infile, char *limiter, int argc)
