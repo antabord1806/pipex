@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/22 17:03:40 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/22 17:17:36 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,12 @@ static char	**get_cmd_path(char *arg)
 
 	i = 0;
 	j = 0;
-	ft_memset(&cmd, NULL, sizeof(char *));
 	while (arg[i] == ' ')
 		i++;
 	while (arg[i] != ' ')
 		j++;
 	arg[j + i] = '\0';
-	return (get_path(arg[j + i]));
+	return (get_path(arg[j]));
 
 }
 
