@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:19:57 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/21 16:03:08 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/22 16:31:00 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					line_length(char *line);
 
-//added
-char				*ft_strjoin_2(char *s1, char *s2, char *result);
-char				*ft_strchr_modded(const char *s, int c);
+// added
+char				**ft_split_modded(char const *s, char c, void *str);
+char				*ft_strnstr_modded(const char *big, const char *little);
+void				ft_free_all(char **arr_aloc);
 
 #endif

@@ -35,7 +35,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ft_strjoin_2(s1, s2, result));
 }
 
-char	*ft_strjoin_2(char *s1, char *s2, char *result)
+static char	*ft_strjoin_2(char *s1, char *s2, char *result)
 {
 	int	i;
 	int	j;

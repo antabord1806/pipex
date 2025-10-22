@@ -1,24 +1,69 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   argument_parsing.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
+/*   Updated: 2025/10/22 17:03:40 by antabord         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "global&functions.h"
 #include "structs.h"
 
-int	argument_parsing(int argc, char *infile, char *limiter, char *outfile)
+int	argument_parsing(int argc, char **argv)
 {
-	t_fd	*file_fd;
-	t_comands **comands;
-	int		nb_cmd;
+	t_fd		*file_fd;
+	int			nb_cmd;
 
 	file_fd = get_fd();
-
-	nb_cmd = infile_handler(infile, limiter, argc);
+	nb_cmd = infile_handler(argv, argc);
 	if (!nb_cmd)
 		return (0);
-	
-	init_comand(nb_cmd);
-	outfile_handler(outfile);
-	command_handler();
+	if (!command_handler(argc, nb_cmd, argv))
+		return (0);
+	outfile_handler(argv[argc - 1]);
 }
 
-static int	infile_handler(char *infile, char *limiter, int argc)
+static int	command_handler(int argc, int nb_cmd, char *argv[])
+{
+	int		i;
+	int		j;
+	char	**path;
+
+	j = 0;
+	i = argc - nb_cmd;
+	while (i < argc)
+	{
+		path = get_cmd_path(argv[i]);
+		if (!path)
+			return (0);
+		if (access(path[j], X_OK) < 0)
+			return (perror("invalid comand"), ft_free_all(path), 0);
+		i++;
+	}
+}
+
+static char	**get_cmd_path(char *arg)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	ft_memset(&cmd, NULL, sizeof(char *));
+	while (arg[i] == ' ')
+		i++;
+	while (arg[i] != ' ')
+		j++;
+	arg[j + i] = '\0';
+	return (get_path(arg[j + i]));
+
+}
+
+static int	infile_handler(char **argv, int argc)
 {
 	t_fd	*file_fd;
 	int		nb_cmd;
@@ -26,20 +71,16 @@ static int	infile_handler(char *infile, char *limiter, int argc)
 	int		i;
 
 	file_fd = get_fd();
-	i = ft_strncmp(infile, "here_doc", 8);
-	if (i == 0)
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		nb_cmd = argc - 4;
-		heredoc_handler(limiter);
+		heredoc_handler(argv[2]);
 	}
 	else
 	{
-		fd = open(infile, O_RDONLY);
+		fd = open(argv[1], O_RDONLY);
 		if (fd != 0)
-		{
-			perror("Cannot access infile");
-			EXIT_FAILURE;
-		}
+			return (perror("Cannot access infile"), 0);
 		nb_cmd = argc - 3;
 	}
 	file_fd->infile_fd = fd;

@@ -15,5 +15,7 @@
 void    env_init(char **environment);
 t_fd    *get_fd(void);
 char    **get_env(void *env);
+t_comands	*cmd(void);
+char	**get_path(void *arg);
 
 #endif

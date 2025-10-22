@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          #+#  +:+       +#+        */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-17 12:21:23 by antabord          #+#    #+#             */
-/*   Updated: 2025-04-17 12:21:23 by antabord         ###   ########.fr       */
+/*   Created: 2025/04/17 12:21:23 by antabord          #+#    #+#             */
+/*   Updated: 2025/10/22 16:17:14 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,30 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
+
+char	*ft_strnstr_modded(const char *big, const char *little)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (!*little)
+		return (big);
+	while (big[i])
+	{
+		j = 0;
+		while (big[j + i] == little[j] && big[j + i] && little[j])
+		{
+			j++;
+			if (!little[j])
+				return ((char *)&big[i]);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 /*int	main(void)
 {
 	unsigned char little[] = "axx";
