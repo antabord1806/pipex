@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:21:23 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/22 16:17:14 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/23 17:04:25 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_strnstr_modded(const char *big, const char *little)
 	i = 0;
 	j = 0;
 	if (!*little)
-		return (big);
+		return ((char *)big);
 	while (big[i])
 	{
 		j = 0;
@@ -52,7 +52,7 @@ char	*ft_strnstr_modded(const char *big, const char *little)
 		{
 			j++;
 			if (!little[j])
-				return ((char *)&big[i]);
+				return ((char *)&big[i + j]);
 		}
 		i++;
 	}

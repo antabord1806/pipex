@@ -6,13 +6,13 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:36:39 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/22 16:30:45 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:10:01 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_all(char **arr_aloc)
+static void	ft_free_all_modded(char **arr_aloc)
 {
 	int	i;
 
@@ -64,9 +64,9 @@ static int	ft_str_fill(char **arr_aloc, char const *s, char c, void *arg)
 		{
 			arr_aloc[i] = malloc((len + ft_strlen((char *)arg) + 1) * sizeof(char));
 			if (!arr_aloc[i])
-				return (ft_free_all(arr_aloc), 0);
+				return (ft_free_all_modded(arr_aloc), 0);
 			ft_strlcpy(arr_aloc[i], s - len, len + 1);
-			ft_strlcat(arr_aloc[i], (char *)arg, len + ft_strlen((char *)arg) + 1);
+			ft_strlcat(arr_aloc[i], (char *)arg, len + ft_strlen((char *)arg) + 2);
 			i++;
 		}
 	}
@@ -86,7 +86,7 @@ char	**ft_split_modded(char const *s, char c, void *arg)
 		return (NULL);
 	if (!ft_str_fill(arr_aloc, s, c, arg))
 	{
-		ft_free_all(arr_aloc);
+		ft_free_all_modded(arr_aloc);
 		return (NULL);
 	}
 	else

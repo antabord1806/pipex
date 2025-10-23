@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: antabord <antabord@student.42.fr>          #+#  +:+      
+/*   By: antabord <antabord@student.42.fr>          #+#  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2025-04-23 14:52:10 by antabord          #+#    #+#             */
 /*   Updated: 2025-04-23 14:52:10 by antabord         ###   ########.fr       */
@@ -15,7 +15,7 @@
 
 #include "libft.h"
 
-static void	ft_free_all(char **arr_aloc)
+void	ft_free_all(char **arr_aloc)
 {
 	int	i;
 
@@ -49,8 +49,8 @@ static size_t	ft_count_words(char const *s, char c)
 
 static int	ft_str_fill(char **arr_aloc, char const *s, char c)
 {
-	size_t		len;
-	int			i;
+	size_t	len;
+	int		i;
 
 	i = 0;
 	while (*s)
@@ -77,8 +77,8 @@ static int	ft_str_fill(char **arr_aloc, char const *s, char c)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t		nwords;
-	char		**arr_aloc;
+	size_t	nwords;
+	char	**arr_aloc;
 
 	if (!s)
 		return (NULL);

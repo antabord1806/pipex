@@ -1,5 +1,19 @@
-#include "global&functions.h"
+#include "functions.h"
 #include "structs.h"
+
+t_comands *init_cmds(void)
+{
+	t_comands *cmds;
+
+	cmds = malloc(sizeof(t_comands));
+	if (!cmds)
+		return (NULL);
+	cmds->name = NULL;
+	cmds->args = NULL;
+	cmds->read_fd = 0;
+	cmds->out_fd = 0;
+	return (cmds);
+}
 
 char	**get_env(void *env)
 {
@@ -7,6 +21,7 @@ char	**get_env(void *env)
 
 	if (env != NULL)
 		global_env = (char **)env;
+	printf("got env\n");
 	return (global_env);
 }
 
@@ -30,9 +45,11 @@ char	**get_path(void *arg)
 	char 	**env;
 	char	*str;
 	int		i;
+	int		j;
 
 	str = 0;
 	i = 0;
+	j = 0;
 	env = get_env(NULL);
 	if (!find)
 	{
@@ -41,7 +58,13 @@ char	**get_path(void *arg)
 			if (!ft_strncmp(env[i], "PATH=", 5))
 			{
 				str = ft_strnstr_modded(env[i], "PATH=");
-				arr = ft_split_modded(str, ":", arg);
+				printf("to concatenate: %s\n", (char *)arg);
+				arr = ft_split_modded(str, ':', arg);
+				while (arr[j])
+				{
+					printf("%s\n", arr[j]);
+					j++;
+				}
 			}
 			i++;
 		}

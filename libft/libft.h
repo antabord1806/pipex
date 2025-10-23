@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:19:57 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/22 16:31:00 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:35:12 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@ int					line_length(char *line);
 char				**ft_split_modded(char const *s, char c, void *str);
 char				*ft_strnstr_modded(const char *big, const char *little);
 void				ft_free_all(char **arr_aloc);
+char				*ft_strjoin_2(char *s1, char *s2, char *result);
+size_t				ft_strlcpy_char_adding_destroyer(char *dst, char *src,
+						char c, size_t size);
 
 #endif

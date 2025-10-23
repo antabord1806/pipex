@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:46:55 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/21 16:03:02 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:20:07 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,4 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)s);
 	}
 	return (NULL);
-}
-
-int	*ft_strchr_modded(const char *s, int c)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return (1);
-		i++;
-	}
-	return (0);
 }

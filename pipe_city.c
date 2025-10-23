@@ -1,2 +1,2 @@
-#include "global&functions.h"
+#include "functions.h"
 
