@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/23 19:07:57 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:30:30 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	command_handler(int argc, int nb_cmd, char *argv[])
 	int		i;
 	int		j;
 	char	**path;
-	t_comands	*cmds;
+	char	**split_args;
 	
 	j = 0;
 	i = argc - nb_cmd - 1;
@@ -35,20 +35,37 @@ int	command_handler(int argc, int nb_cmd, char *argv[])
 		printf("valid cmd: %s\n", path[j]);
 		if (access(path[j], X_OK) == 0)
 		{
+			split_args = ft_split(argv[i], ' ');
+			if (!split_args)
+				return (0);
+			cmds = init_cmds();
+			if (!cmds)
+				return (0);
 			cmds->name = path[j];
-			cmds->args = NULL;
+			cmds->args = split_args;
+			cmds->in_fd = get_fd()->infile_fd;
+			cmds->out_fd = get_fd()->outfile_fd;
+			cmds->idx = i;
+			printf("command %d: %s\n", cmds->idx, cmds->name);
 		}
-		j++;
-		i++;
 	}
 	return (1);
 }
+
+void	split_args(char *arg)
+{
+	char	**split;
+
+	split = ft_split(arg, ' ');
+}
+
 char	**get_cmd_path(char *arg)
 {
 	int		i;
 	int		j;
 	char	*cmd;
 	char	**res;
+	char	**args;
 	
 	i = 0;
 	j = 0;
@@ -64,8 +81,9 @@ char	**get_cmd_path(char *arg)
 		ft_strlcpy(cmd + 1, &arg[i], j + 1);
 	else
 		cmd[1] = '\0';
-	ft_split_ar
 	res = get_path(cmd);
+	args = ft_split(arg, ' ');
+	
 	free(cmd);
 	return (res);
 }

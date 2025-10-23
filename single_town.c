@@ -10,8 +10,9 @@ t_comands *init_cmds(void)
 		return (NULL);
 	cmds->name = NULL;
 	cmds->args = NULL;
-	cmds->read_fd = 0;
+	cmds->in_fd = 0;
 	cmds->out_fd = 0;
+	cmds->idx = 0;
 	return (cmds);
 }
 
