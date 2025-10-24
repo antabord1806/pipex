@@ -6,57 +6,89 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/23 19:30:30 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/24 14:59:55 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "functions.h"
 #include "structs.h"
 
+void	ft_lstadd_back_cmd(t_comands **lst, t_comands *new)
+{
+	t_comands	*tmp;
 
-int	command_handler(int argc, int nb_cmd, char *argv[])
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+}
+void	command_handler(int argc, int nb_cmd, char *argv[], t_comands **lst)
 {
 	int		i;
 	int		j;
 	char	**path;
-	char	**split_args;
-	
-	j = 0;
-	i = argc - nb_cmd - 1;
-	printf("about to process comands\n");
-	while (i < argc)
+	int		found;
+
+	j = -1;
+	i = argc - nb_cmd - 2;
+	found = 0;
+	while (++i < argc)
 	{
 		path = get_cmd_path(argv[i]);
 		if (!path)
+			return (ft_free_all(path));
+		while (path[++j])
 		{
-			printf("invalid path\n");
-			return (0);
+			if (access(path[j], X_OK) == 0)
+			{
+				adding_to_lst(path[j], argv[i], lst);
+				j = 0;
+				found++;
+				break;
+			}
 		}
-		printf("valid cmd: %s\n", path[j]);
-		if (access(path[j], X_OK) == 0)
-		{
-			split_args = ft_split(argv[i], ' ');
-			if (!split_args)
-				return (0);
-			cmds = init_cmds();
-			if (!cmds)
-				return (0);
-			cmds->name = path[j];
-			cmds->args = split_args;
-			cmds->in_fd = get_fd()->infile_fd;
-			cmds->out_fd = get_fd()->outfile_fd;
-			cmds->idx = i;
-			printf("command %d: %s\n", cmds->idx, cmds->name);
-		}
+		if (!found)
+			return (perror("invalid cmd\n"), ft_free_all(path));
 	}
-	return (1);
 }
 
-void	split_args(char *arg)
+void	adding_to_lst(char *path, char *argv, t_comands **lst)
 {
-	char	**split;
+	t_comands	*cmd;
+	char		**splited;
+	static int	idx = 0;
+	int		i;
 
-	split = ft_split(arg, ' ');
+	i = 0;
+	cmd = init_cmds();
+	if (!cmd)
+		return (free(path));
+	splited = ft_split(argv, ' ');
+	if (!splited)
+	{
+		free(cmd);
+		return ;
+	}
+	cmd->name = path;
+	cmd->args = splited;
+	cmd->idx = idx;
+	cmd->next = NULL;
+	idx++;
+	printf("name: %s\n", cmd->name);
+	while (splited[i])
+	{
+		printf("args: %s\n", cmd->args[i]);
+		i++;
+	}
+	printf("ids: %d\n", cmd->idx);
+	ft_lstadd_back_cmd(lst, cmd);
 }
 
 char	**get_cmd_path(char *arg)
@@ -65,8 +97,7 @@ char	**get_cmd_path(char *arg)
 	int		j;
 	char	*cmd;
 	char	**res;
-	char	**args;
-	
+
 	i = 0;
 	j = 0;
 	while (arg[i] == ' ')
@@ -82,8 +113,6 @@ char	**get_cmd_path(char *arg)
 	else
 		cmd[1] = '\0';
 	res = get_path(cmd);
-	args = ft_split(arg, ' ');
-	
 	free(cmd);
 	return (res);
 }
@@ -93,14 +122,14 @@ int	infile_handler(char **argv, int argc)
 	t_fd	*file_fd;
 	int		nb_cmd;
 	int		fd;
-	
+
 	fd = 0;
 	file_fd = get_fd();
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		nb_cmd = argc - 4;
 		perror("herdoc detected\n");
-/* 		heredoc_handler(argv[2]); */
+		/* 		heredoc_handler(argv[2]); */
 	}
 	else
 	{
@@ -117,7 +146,7 @@ void	outfile_handler(char *outfile)
 {
 	int		fd;
 	t_fd	*file_fd;
-	
+
 	file_fd = get_fd();
 	fd = open(outfile, O_WRONLY);
 	if (fd != 1)
@@ -128,18 +157,21 @@ void	outfile_handler(char *outfile)
 	file_fd->outfile_fd = fd;
 }
 
-int	argument_parsing(int argc, char **argv)
+t_comands	*argument_parsing(int argc, char **argv)
 {
 	t_fd		*file_fd;
+	t_comands	*lst;
 	int			nb_cmd;
 
+	lst = NULL;
 	file_fd = get_fd();
 	nb_cmd = infile_handler(argv, argc);
 	if (!nb_cmd)
 		return (0);
-	printf("infie handled\n");
-	command_handler(argc, nb_cmd, argv);
-	//outfile_handler(argv[argc - 1]);
-	
-	return (1);
+	printf("infile handled\n");
+	command_handler(argc, nb_cmd, argv, &lst);
+	outfile_handler(argv[argc - 1]);
+	return (lst);
 }
+
+

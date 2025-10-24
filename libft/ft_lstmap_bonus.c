@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          #+#  +:+       +#+        */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-03 15:42:43 by antabord          #+#    #+#             */
-/*   Updated: 2025-05-03 15:42:43 by antabord         ###   ########.fr       */
+/*   Created: 2025/05/03 15:42:43 by antabord          #+#    #+#             */
+/*   Updated: 2025/10/24 13:47:08 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	free(content);
 }*/
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+/* t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*newstr;
 	t_list	*newnode;
@@ -39,7 +39,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		lst = lst->next;
 	}
 	return (newstr);
-}
+} */
 /*void	*ft_uppercase(void *content)
 {
 	char *str = (char *)content;

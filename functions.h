@@ -16,13 +16,15 @@
 void		env_init(char **environment);
 t_fd		*get_fd(void);
 char		**get_env(void *env);
-t_comands	*cmd(void);
+t_comands	*init_cmds(void);
 char		**get_path(void *arg);
 
 // parsing
-int			argument_parsing(int argc, char **argv, t_comands *cmds);
+t_comands	*argument_parsing(int argc, char **argv);
 int			infile_handler(char **argv, int argc);
 void		outfile_handler(char *outfile);
 char		**get_cmd_path(char *arg);
+void		adding_to_lst(char *path, char *argv, t_comands **lst);
+void		pipe_city(t_comands *lst/*, int argc, char *argv[]) */);
 
 #endif
