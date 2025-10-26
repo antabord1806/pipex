@@ -13,6 +13,6 @@ int	main(int argc, char *argv[], char **env)
 	cmds = argument_parsing(argc, argv);
 	if (!cmds)
 		return (0);
-	pipe_city(cmds/* , argc, argv */);
+	pipe_city(cmds, argc, argv);
 	return (0);
 }
