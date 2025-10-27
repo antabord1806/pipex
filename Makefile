@@ -7,7 +7,7 @@ LIB_DIR = libft
 
 INCLUDES = -I $(LIB_DIR)
 
-SRC = argument_parsing.c pipex.c single_town.c pipe_city.c \
+SRC = argument_parsing.c pipex.c single_town.c pipe_test.c utils.c \
 
 OBJ = $(SRC: .c=.o)
 

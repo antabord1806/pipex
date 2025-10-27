@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre <andre@student.42.fr>                +#+  +:+       +#+        */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/26 20:35:07 by andre            ###   ########.fr       */
+/*   Updated: 2025/10/27 18:12:36 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	command_handler(int argc, int nb_cmd, char *argv[], t_comands **lst)
 	char	**path;
 	int		found;
 
-	j = -1;
 	i = argc - nb_cmd - 2;
-	found = 0;
-	while (++i < argc)
+	while (++i < argc - 1)
 	{
+		j = -1;
+		found = 0;
 		path = get_cmd_path(argv[i]);
 		if (!path)
 			return (ft_free_all(path));
@@ -32,14 +32,16 @@ void	command_handler(int argc, int nb_cmd, char *argv[], t_comands **lst)
 		{
 			if (access(path[j], X_OK) == 0)
 			{
+				printf("valid cmd: %s\n", path[j]);
 				adding_to_lst(path[j], argv[i], lst);
-				j = 0;
+				j = -1;
 				found++;
 				break;
 			}
 		}
+		printf("loop ended\n");
 		if (!found)
-			return (perror("invalid cmd\n"), ft_free_all(path));
+			return (printf("invalid cmd:%s\n", argv[i]), ft_free_all(path), exit(127));
 	}
 }
 
@@ -47,7 +49,7 @@ void	adding_to_lst(char *path, char *argv, t_comands **lst)
 {
 	t_comands	*cmd;
 	char		**splited;
-	static int	idx = 0;
+	static int	idx;
 	int		i;
 
 	i = 0;
@@ -103,42 +105,38 @@ char	**get_cmd_path(char *arg)
 
 int	infile_handler(char **argv, int argc)
 {
-	t_fd	*file_fd;
 	int		nb_cmd;
 	int		fd;
 
 	fd = 0;
-	file_fd = get_fd();
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		nb_cmd = argc - 4;
 		perror("herdoc detected\n");
-		/* 		heredoc_handler(argv[2]); */
+		//heredoc_handler(argv[2]);
 	}
 	else
 	{
 		fd = open(argv[1], O_RDONLY);
-		if (fd == -1)
-			return (perror("Cannot access infile\n"), 0);
+/* 		if (fd == -1)
+			return (perror("Cannot access infile\n"), 0); */
 		nb_cmd = argc - 3;
 	}
-	file_fd->infile_fd = fd;
+	get_fd()->infile_fd = fd;
 	return (nb_cmd);
 }
 
 void	outfile_handler(char *outfile)
 {
 	int		fd;
-	t_fd	*file_fd;
 
-	file_fd = get_fd();
-	fd = open(outfile, O_WRONLY);
-	if (fd != 1)
+	fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+/* 	if (fd != 1)
 	{
 		perror("Cannot access outfile\n");
 		EXIT_FAILURE;
-	}
-	file_fd->outfile_fd = fd;
+	} */
+	get_fd()->outfile_fd = fd;
 }
 
 t_comands	*argument_parsing(int argc, char **argv)

@@ -20,27 +20,20 @@ char	**get_env(void *env)
 
 	if (env != NULL)
 		global_env = (char **)env;
-	printf("got env\n");
 	return (global_env);
 }
 
 t_fd	*get_fd(void)
 {
 	static t_fd fd;
-	static int init = 0;
 
-	if (!init)
-	{
-		ft_memset(&fd, 0, sizeof(t_fd));
-		init++;
-	}
 	return (&fd);
 }
 
 char	**get_path(void *arg)
 {
-	static char **arr = NULL;
-	static int	find = 0;
+	static char **arr;
+	static int	find;
 	char 	**env;
 	char	*str;
 	int		i;

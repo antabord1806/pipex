@@ -17,5 +17,4 @@ typedef struct s_comands
 }   t_comands;
 
 
-
 #endif
