@@ -3,13 +3,13 @@
 
 # include "structs.h"
 # include <fcntl.h>
-# include <libft.h>
+# include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
+#include <stdbool.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
@@ -35,6 +35,7 @@ int			pipe_city(t_comands *lst, int argc, char *argv[]);
 void		ft_lstadd_back_cmd(t_comands **lst, t_comands *new);
 int			ft_lstsize_cmd(t_comands *lst);
 
-void    pipenstuff(t_comands *lst);
+void		pipenstuff(t_comands *lst);
+void		ft_free_struct(t_comands *cmd);
 
 #endif

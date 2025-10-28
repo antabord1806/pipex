@@ -16,5 +16,4 @@ typedef struct s_comands
     struct s_comands  *next;
 }   t_comands;
 
-
 #endif

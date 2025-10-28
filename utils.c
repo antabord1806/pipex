@@ -30,3 +30,23 @@ int	ft_lstsize_cmd(t_comands *lst)
 	}
 	return (i);
 }
+
+void	ft_free_struct(t_comands *cmd)
+{
+	t_comands *tmp;
+	t_comands *next;
+
+	if (!cmd)
+		return ;
+	tmp = cmd;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (tmp->name)
+			free(tmp->name);
+		if (tmp->args)
+			ft_free_all(tmp->args);
+		free(tmp);
+		tmp = next;
+	}
+}

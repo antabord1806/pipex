@@ -6,104 +6,103 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 20:35:37 by andre             #+#    #+#             */
-/*   Updated: 2025/10/27 12:56:18 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:11:42 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "functions.h"
 
-static int	**laying_pipe(int n_cmds)
+void	pipe_city(t_comands *head, int n_cmds)
 {
-	int	pipe_fd[n_cmds - 1][2];
-	int	i;
+	int			pid[n_cmds];
+	int			fds[2];
+	int			tmp_fd;
+	int			i;
+	t_comands	*lst;
 
+	lst = head;
 	i = 0;
-	if (!n_cmds || n_cmds < 0)
-		return (0);
-	while (pipe_fd[i++])
-	{
-		pipe(pipe_fd[i]);
-        if (pipe(pipe_fd[i]) == -1)
-            return (perror("pipe\n"), NULL);
-	}
-	return (pipe_fd);
-}
-
-static int	*child_factory(int n_cmds)
-{
-	int	pid[n_cmds];
-	int	i;
-
-	i = 0;
-	if (!n_cmds)
-		return (0);
-	while (pid[i++])
-    {
-		pid[i] = fork();
-        if (pid[i] == -1)
-            return (perror("fork\n"), NULL);
-    }
-	return (pid);
-}
-static void	child_processing(t_comands *lst, int **pipe_fd, int i)
-{
-    t_fd *fd;
-    int i;
-
-    j = 0;
-    fd = get_fd();
-	if (i == 0)
-	{
-		dup2(fd->infile_fd, STDIN_FILENO);
-		dup2(pipe_fd[0][1], STDOUT_FILENO);
-        closing_dungeon(pipe_fd[0], fd->infile_fd, i);
-		close(fd->infile_fd);
-		close(pipe_fd[0][1]);
-	}
-	else if (i > 0 && i < ft_lstsize_cmd(lst))
-	{
-		dup2(pipe_fd[i - 1][0], STDIN_FILENO);
-		dup2(pipe_fd[i][1], STDOUT_FILENO);
-		close(pipe_fd[i - 1][0]);
-		close(pipe_fd[i][1]);
-	}
-	else if (i == ft_lstsize_cmd(lst))
-	{
-		dup2(pipe_fd[i - 1][0], STDIN_FILENO);
-		close(pipe_fd[i - 1]);
-	}
-	execve(lst->name, lst->args + 1, get_env(NULL));
-}
-
-void    closing_dungeon(int *pipe_fd, int fd, int i)
-{
-    close(pipe_fd[i][0]);
-    close(pipe_fd[i][1]);
-}
-
-int	pipe_city(t_comands *lst, int argc, char *argv[])
-{
-	int i;
-	int n_cmd;
-	int **pipe_fd;
-	int *pid;
-	t_fd *fd;
-
-	fd = get_fd();
-	n_cmd = ft_lstsize_cmd(lst);
-	pipe_fd = laying_pipe(n_cmd);
-    if (!pipe_fd)
-        return ;
-	pid = child_factory(n_cmd);
-	if (!pid)
-		return;
 	while (pid[i])
 	{
-		if (pid[i] == 0)
-            child_processing(lst, pipe_fd, i);
+		if (i != n_cmds)
+		{
+			if (pipe(fds[0] == -1))
+				perror("pipe\n");
+		}
+		pid[i] = child_factory_and_waiting_room(pid[i], true);
+		if(pid[i] == 0)
+		{
+			if (i == 0)
+			{
+				dup2(get_fd()->infile_fd, STDIN_FILENO);
+				dup2(fds[1], STDOUT_FILENO);
+				close_all(fds[1], get_fd()->infile_fd, -1, -1);
+				execute_n_sht(head, lst);
+			}
+			if (i > 0 && i < n_cmds)
+			{
+				dup2(tmp_fd, STDIN_FILENO);
+				dup2(fds[1], STDOUT_FILENO);
+				close_all(fds[1], tmp_fd, -1, -1);
+				execute_n_sht(head, lst);
+			}
+			if (i == n_cmds)
+			{
+				dup2(tmp_fd, STDIN_FILENO);
+				dup2(get_fd()->outfile_fd, STDOUT_FILENO);
+				close_all(tmp_fd, get_fd()->outfile_fd, -1, -1);
+				execute_n_sht(head, lst);
+			}
 		else
-			wait();
-		i++;
-		lst->next = lst;
+		{
+			close_all(0, 1, -1, -1);
+			child_factory_and_waiting_room(NULL, false);
+			tmp_fd = fds[0];
+			i++;
+		}
+		lst = lst->next;
+		}
 	}
+}
+
+void	execute_n_sht(t_comands *head, t_comands *lst)
+{
+	execve(lst->name, lst->args, get_env(NULL));
+	ft_free_struct(head);
+	perror("exec\n");
+	exit(EXIT_FAILURE);
+}
+
+
+pid_t	child_factory_and_waiting_room(int pid, bool making_baby)
+{
+	int status;
+	
+	if (making_baby)
+	{
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork\n");
+			return (-1);
+		}
+		return (pid);
+	}
+	else
+		waitpid(-1, &status, 0);
+}
+
+void	close_all(int fd1, int fd2, int fd3, int fd4)
+{
+	int	i;
+
+	i = 0;
+	if (fd1 != -1)
+		close(fd1);
+	if (fd2 != -1)
+		close(fd2);
+	if (fd3 != -1)
+		close(fd3);
+	if (fd4 != -1)
+		close(fd4);
 }

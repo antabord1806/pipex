@@ -39,6 +39,7 @@ char	**get_path(void *arg)
 	int		i;
 	int		j;
 
+	(void)arg;
 	str = 0;
 	i = 0;
 	j = 0;
@@ -50,13 +51,13 @@ char	**get_path(void *arg)
 			if (!ft_strncmp(env[i], "PATH=", 5))
 			{
 				str = ft_strnstr_modded(env[i], "PATH=");
-				printf("to concatenate: %s\n", (char *)arg);
 				arr = ft_split_modded(str, ':', arg);
+				/* printf("to concatenate: %s\n", (char *)arg);
 				while (arr[j])
 				{
 					printf("%s\n", arr[j]);
 					j++;
-				}
+				} */
 			}
 			i++;
 		}

@@ -1,1 +1,20 @@
-ola tuod bem
+total 116
+-rw-r--r-- 1 antabord 2025_lisboa  3415 Oct 28 16:16 argument_parsing.c
+-rw-r--r-- 1 antabord 2025_lisboa  8528 Oct 28 18:13 argument_parsing.o
+-rw-r--r-- 1 antabord 2025_lisboa   995 Oct 28 17:45 functions.h
+-rw-r--r-- 1 antabord 2025_lisboa    25 Oct 28 12:23 infile
+drwxr-xr-x 2 antabord 2025_lisboa  4096 Oct 28 18:13 libft
+-rw-r--r-- 1 antabord 2025_lisboa   528 Oct 28 15:03 Makefile
+-rw-r--r-- 1 antabord 2025_lisboa     0 Oct 28 18:14 outfile
+-rw-r--r-- 1 antabord 2025_lisboa  2526 Oct 28 18:11 pipe_city.c
+-rw-r--r-- 1 antabord 2025_lisboa  2061 Oct 28 16:09 pipe_test.c
+-rw-r--r-- 1 antabord 2025_lisboa  5272 Oct 28 18:13 pipe_test.o
+-rwxr-xr-x 1 antabord 2025_lisboa 35160 Oct 28 18:13 pipex
+-rw-r--r-- 1 antabord 2025_lisboa  1189 Oct 28 18:13 pipex.c
+-rw-r--r-- 1 antabord 2025_lisboa  3272 Oct 28 18:13 pipex.o
+-rw-r--r-- 1 antabord 2025_lisboa   993 Oct 28 15:29 single_town.c
+-rw-r--r-- 1 antabord 2025_lisboa  5168 Oct 28 18:13 single_town.o
+-rw-r--r-- 1 antabord 2025_lisboa   266 Oct 28 11:53 structs.h
+-rw-r--r-- 1 antabord 2025_lisboa   661 Oct 28 14:43 utils.c
+-rw-r--r-- 1 antabord 2025_lisboa  3888 Oct 28 18:13 utils.o
+-rw-r--r-- 1 antabord 2025_lisboa     0 Oct 28 14:38 wc -l

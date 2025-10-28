@@ -6,20 +6,22 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 15:55:07 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/27 17:41:23 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:09:16 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "functions.h"
 #include "structs.h"
 
-void	pipenstuff(t_comands *lst)
+void	pipenstuff(t_comands *head)
 {
 	int pid1;
 	int pid2;
 	int pipe_fd[2];
 	// int pipe_tmp;
-
+	t_comands *lst;
+	
+	lst = head;
 	if (pipe(pipe_fd) == -1)
 		return (perror("pipe\n"));
 	pid1 = fork();
@@ -33,8 +35,10 @@ void	pipenstuff(t_comands *lst)
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 		execve(lst->name, lst->args, get_env(NULL));
-		printf("exec1\n");
-		EXIT_FAILURE;
+		close(get_fd()->outfile_fd);
+		ft_free_struct(head);
+		perror("exec1\n");
+		exit(EXIT_FAILURE);
 	}
 	lst = lst->next;
 	pid2 = fork();
@@ -48,8 +52,10 @@ void	pipenstuff(t_comands *lst)
 		dup2(get_fd()->outfile_fd, STDOUT_FILENO);
 		close(get_fd()->outfile_fd);
 		execve(lst->name, lst->args, get_env(NULL));
-		printf("exec2\n");
-		EXIT_FAILURE;
+		close(get_fd()->infile_fd);
+		ft_free_struct(head);
+		perror("exec2\n");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -57,5 +63,7 @@ void	pipenstuff(t_comands *lst)
 		close(pipe_fd[1]);
 		waitpid(pid1, NULL, 0);
 		waitpid(pid2, NULL, 0);
+		close(get_fd()->infile_fd);
+		close(get_fd()->outfile_fd);
 	}
 }
