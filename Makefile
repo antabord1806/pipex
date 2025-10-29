@@ -9,7 +9,7 @@ LIBFT_DIR = libft
 
 INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRC = argument_parsing.c pipex.c single_town.c pipe_test.c utils.c \
+SRC = argument_parsing.c pipex.c single_town.c pipe_test.c utils.c pipe_city.c \
 
 OBJ = $(SRC:.c=.o)
 

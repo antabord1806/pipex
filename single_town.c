@@ -26,8 +26,13 @@ char	**get_env(void *env)
 t_fd	*get_fd(void)
 {
 	static t_fd fd;
-
 	return (&fd);
+}
+
+t_ncmd		*get_ncmd(void)
+{
+	static t_ncmd n_cmds;
+	return (&n_cmds);
 }
 
 char	**get_path(void *arg)
@@ -37,12 +42,12 @@ char	**get_path(void *arg)
 	char 	**env;
 	char	*str;
 	int		i;
-	int		j;
+	//int		j;
 
 	(void)arg;
 	str = 0;
 	i = 0;
-	j = 0;
+	//j = 0;
 	env = get_env(NULL);
 	if (!find)
 	{

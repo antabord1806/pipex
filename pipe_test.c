@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andre <andre@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 15:55:07 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/28 16:09:16 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/29 12:08:27 by andre            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	pipenstuff(t_comands *head)
 	int pid1;
 	int pid2;
 	int pipe_fd[2];
-	// int pipe_tmp;
 	t_comands *lst;
 	
 	lst = head;

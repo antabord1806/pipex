@@ -20,6 +20,7 @@
 // init & gets
 void		env_init(char **environment);
 t_fd		*get_fd(void);
+t_ncmd		*get_ncmd(void);
 char		**get_env(void *env);
 t_comands	*init_cmds(void);
 char		**get_path(void *arg);
@@ -31,7 +32,7 @@ int			infile_handler(char **argv, int argc);
 void		outfile_handler(char *outfile);
 char		**get_cmd_path(char *arg);
 void		adding_to_lst(char *path, char *argv, t_comands **lst);
-int			pipe_city(t_comands *lst, int argc, char *argv[]);
+void		pipe_city(t_comands *lst, int n_cmds);
 void		ft_lstadd_back_cmd(t_comands **lst, t_comands *new);
 int			ft_lstsize_cmd(t_comands *lst);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andre <andre@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/28 16:16:28 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/29 14:05:44 by andre            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	infile_handler(char **argv, int argc)
 		nb_cmd = argc - 3;
 	}
 	get_fd()->infile_fd = fd;
+	get_ncmd()->n_cmds = nb_cmd;
 	return (nb_cmd);
 }
 
@@ -142,12 +143,10 @@ void	outfile_handler(char *outfile)
 
 t_comands	*argument_parsing(int argc, char **argv)
 {
-	t_fd		*file_fd;
 	t_comands	*lst;
 	int			nb_cmd;
 
 	lst = NULL;
-	file_fd = get_fd();
 	//printf("got fd\n");
 	nb_cmd = infile_handler(argv, argc);
 	if (!nb_cmd)

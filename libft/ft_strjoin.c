@@ -20,11 +20,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*result;
 	int		len1;
 	int		len2;
-	int		i;
-	int		j;
 
-	j = 0;
-	i = 0;
 	if (!s2)
 		return (NULL);
 	len1 = ft_strlen(s1);

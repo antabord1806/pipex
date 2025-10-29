@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andre <andre@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 14:46:07 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/28 18:13:08 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/29 17:28:54 by andre            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int argc, char *argv[], char **env)
 	cmds = argument_parsing(argc, argv);
 	if (!cmds)
 		return (0);
-	pipenstuff(cmds);
+	//printf("going to pipe city\n");
+	pipe_city(cmds, get_ncmd()->n_cmds);
     ft_free_struct(cmds);
 	return (0);
 }
