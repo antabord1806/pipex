@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:19:57 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/24 13:44:50 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:13:39 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int					ft_lstsize(t_list *lst);
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
-//void				ft_lstadd_back(t_list **lst, t_list *new);
+// void				ft_lstadd_back(t_list **lst, t_list *new);
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 void				ft_lstadd_front(t_list **lst, t_list *new);
@@ -82,5 +82,8 @@ void				ft_free_all(char **arr_aloc);
 char				*ft_strjoin_2(char *s1, char *s2, char *result);
 size_t				ft_strlcpy_char_adding_destroyer(char *dst, char *src,
 						char c, size_t size);
+int					ft_strnstr_modded2(const char *big, const char *little);
+int					ft_strncmp_raw_dogged(const char *s1, const char *s2,
+						int n);
 
 #endif

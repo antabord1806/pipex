@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:21:23 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/23 17:04:25 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/30 13:26:29 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	return (NULL);
 }
 
+
+//ele devolve desde o incio da str pequena ate ao fim da grande
+
 char	*ft_strnstr_modded(const char *big, const char *little)
 {
 	size_t	i;
@@ -57,6 +60,29 @@ char	*ft_strnstr_modded(const char *big, const char *little)
 		i++;
 	}
 	return (NULL);
+}
+
+int	ft_strnstr_modded2(const char *big, const char *little)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (!*little)
+		return (0);
+	while (big[i])
+	{
+		j = 0;
+		while (big[j + i] == little[j] && big[j + i] && little[j])
+		{
+			j++;
+			if (!little[j])
+				return (j);
+		}
+		i++;
+	}
+	return (0);
 }
 
 /*int	main(void)

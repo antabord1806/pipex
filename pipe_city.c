@@ -3,26 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_city.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre <andre@student.42.fr>                +#+  +:+       +#+        */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 20:35:37 by andre             #+#    #+#             */
-/*   Updated: 2025/10/29 18:07:58 by andre            ###   ########.fr       */
+/*   Updated: 2025/10/30 19:16:55 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "functions.h"
 
 
-static void execute_n_sht(t_comands *head, t_comands *lst)
+static void execute_cmd(t_comands *cmd, int in, int out)
 {
-	execve(lst->name, lst->args, get_env(NULL));
-	ft_free_struct(head);
-	perror("exec\n");
-	exit(EXIT_FAILURE);
+	// printf("args: %s in: %i out: %i\n", cmd->args[0], in, out);
+	int pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+		dup2(in, STDIN_FILENO);
+		close(in);
+		execve(cmd->name, cmd->args, get_env(NULL));
+		perror("exec\n");
+		exit(EXIT_FAILURE);
+	}
+	close(in);
+	close(out);
 }
 
 
-static pid_t	child_factory_and_waiting_room(int pid)
+pid_t	child_factory_and_waiting_room(int pid)
 {
 	pid = fork();
     //printf("forked\n");
@@ -31,75 +43,53 @@ static pid_t	child_factory_and_waiting_room(int pid)
 	return (pid);
 }
 
-static void	close_all(int fd1, int fd2, int fd3, int fd4)
+/* void	close_all(void)
 {
-	if (fd1 != -1 || fd1 > 2)
-        close(fd1);
-    if (fd2 != -1|| fd2 > 2)
-		close(fd2);
-	if (fd3 != -1|| fd3 > 2)
-		close(fd3);
-	if (fd4 != -1|| fd4 > 2)
-		close(fd4);
+	if (get_fd()->infile_fd != -1 )
+        close(get_fd()->infile_fd);
+    if (get_fd()->outfile_fd != -1)
+		close(get_fd()->outfile_fd);
+	// if (fd3 != -1 &&fd3 > 2)
+	// 	close(fd3);
+	// if (fd4 != -1 && fd4 > 2)
+	// 	close(fd4);
+} */
+
+int close_fd(int oldfd, int fd)
+{
+	close(oldfd);
+	return (fd);
 }
 
-void	pipe_city(t_comands *head, int n_cmds)
+void wait_all(t_comands *cmd)
 {
-    int			pid[n_cmds];
-    int			fds[2];
-    int			tmp_fd;
-    int			i;
-    t_comands	*lst;
+	 while (cmd)
+    {
+        wait(NULL);
+        cmd = cmd->next;
+    }
+}
 
-    lst = head;
-    i = 0;
-    tmp_fd = -1;
-    while (i < n_cmds)
+void	pipe_city(t_comands *head, t_fd *fds)
+{
+    t_comands	*cmd;
+	int in = fds->infile_fd;
+	int out;
+
+    cmd = head;
+	printf("fin: %i\n", fds->infile_fd);
+    while (cmd)
     {
-        //printf("n_cmd: %d\n", n_cmds);
-        if (i != n_cmds - 1)
-        {
-            if (pipe(fds) == -1)
-                return (perror("pipe\n"));
-           // printf("piped\n");
-        }
-        pid[i] = child_factory_and_waiting_room(pid[i]);
-        if(pid[i] == 0)
-        {
-            if (i == 0)
-            {
-                dup2(get_fd()->infile_fd, STDIN_FILENO);
-                dup2(fds[1], STDOUT_FILENO);
-                close_all(fds[1], get_fd()->infile_fd, -1, -1);
-            }
-            if (i == n_cmds - 1)
-            {
-                dup2(tmp_fd, STDIN_FILENO);
-                dup2(get_fd()->outfile_fd, STDOUT_FILENO);
-                close_all(tmp_fd, get_fd()->outfile_fd, -1, -1);
-            }
-            else
-            {
-                dup2(tmp_fd, STDIN_FILENO);
-                dup2(fds[1], STDOUT_FILENO);
-                close_all(-1, tmp_fd, fds[0], -1);
-            }
-            execute_n_sht(head, lst);
-        }
-        if ( i != n_cmds - 1)
-        {
-            close_all(fds[1], tmp_fd, -1, -1);
-            tmp_fd = fds[0];
-        }
-        i++;
-        lst = lst->next;
+		out = dup(1);
+		if (cmd->next)
+		{	
+			pipe(fds->fd);
+			out = close_fd(out, fds->fd[1]);
+		} else
+			out = close_fd(out, fds->outfile_fd);
+		execute_cmd(cmd, in, out);
+		in = close_fd(in, fds->fd[0]);
+        cmd = cmd->next;
     }
-    i = 0;
-    while (i < n_cmds)
-    {
-        waitpid(pid[i], NULL, 0);
-        i++;
-    }
-    if (i == n_cmds)
-        close_all(tmp_fd, get_fd()->infile_fd, get_fd()->outfile_fd, -1);
+   wait_all(head);
 }

@@ -6,6 +6,7 @@ typedef struct s_fd
 {
     int infile_fd;
     int outfile_fd;
+    int fd[2];
 }   t_fd;
 
 typedef struct s_comands

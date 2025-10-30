@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre <andre@student.42.fr>                +#+  +:+       +#+        */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/29 14:05:44 by andre            ###   ########.fr       */
+/*   Updated: 2025/10/30 18:53:18 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	command_handler(int argc, int nb_cmd, char *argv[], t_comands **lst)
 		found = 0;
 		path = get_cmd_path(argv[i]);
  		if (!path)
-			return (ft_free_all(path));
+			return ;
 		while (path[j])
 		{
 			//printf("%s\n", path[j]);
@@ -113,8 +113,7 @@ int	infile_handler(char **argv, int argc)
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		nb_cmd = argc - 4;
-		perror("herdoc detected\n");
-		//heredoc_handler(argv[2]);
+		heredoc_handler(argv[2]);
 	}
 	else
 	{
@@ -122,8 +121,8 @@ int	infile_handler(char **argv, int argc)
 		if (fd == -1)
 			return (perror("Cannot access infile\n"), 0);
 		nb_cmd = argc - 3;
+		get_fd()->infile_fd = fd;
 	}
-	get_fd()->infile_fd = fd;
 	get_ncmd()->n_cmds = nb_cmd;
 	return (nb_cmd);
 }

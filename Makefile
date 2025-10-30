@@ -9,7 +9,7 @@ LIBFT_DIR = libft
 
 INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRC = argument_parsing.c pipex.c single_town.c pipe_test.c utils.c pipe_city.c \
+SRC = argument_parsing.c pipex.c single_town.c pipe_test.c utils.c pipe_city.c here_doc_handler.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -32,5 +32,8 @@ fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
+r:
+	make re && clear && ./pipex infile "cat" "cat" "cat" outfile
 
 .PHONY: all clean fclean re
