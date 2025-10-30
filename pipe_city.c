@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 20:35:37 by andre             #+#    #+#             */
-/*   Updated: 2025/10/30 19:16:55 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/30 19:24:25 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 static void execute_cmd(t_comands *cmd, int in, int out)
 {
-	// printf("args: %s in: %i out: %i\n", cmd->args[0], in, out);
 	int pid;
 
 	pid = fork();
@@ -37,7 +36,6 @@ static void execute_cmd(t_comands *cmd, int in, int out)
 pid_t	child_factory_and_waiting_room(int pid)
 {
 	pid = fork();
-    //printf("forked\n");
 	if (pid== -1)
 		return (perror("fork\n"), -1);
 	return (pid);
