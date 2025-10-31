@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andre <andre@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:37:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/31 17:23:05 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/31 18:58:05 by andre            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ char	**get_cmd_path(char *arg)
 	else
 		cmd[1] = '\0';
 	res = get_path(cmd);
+		if (!res)
+			return (NULL);
 	free(cmd);
 	return (res);
 }
