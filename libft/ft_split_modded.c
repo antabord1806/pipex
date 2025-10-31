@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:36:39 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/23 15:10:01 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/31 17:06:50 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,16 @@ static size_t	ft_count_words(char const *s, char c)
 	return (i);
 }
 
+static void	norm_rip(char *arr_aloc, char const *s, void *arg, int len)
+{
+	ft_strlcpy(arr_aloc, s - len, len + 1);
+	ft_strlcat(arr_aloc, (char *)arg, len + ft_strlen((char *)arg) + 2);
+}
+
 static int	ft_str_fill(char **arr_aloc, char const *s, char c, void *arg)
 {
-	size_t		len;
-	int			i;
+	size_t	len;
+	int		i;
 
 	i = 0;
 	while (*s)
@@ -62,11 +68,11 @@ static int	ft_str_fill(char **arr_aloc, char const *s, char c, void *arg)
 		}
 		if (len > 0)
 		{
-			arr_aloc[i] = malloc((len + ft_strlen((char *)arg) + 1) * sizeof(char));
+			arr_aloc[i] = malloc((len + ft_strlen((char *)arg) + 1)
+					* sizeof(char));
 			if (!arr_aloc[i])
 				return (ft_free_all_modded(arr_aloc), 0);
-			ft_strlcpy(arr_aloc[i], s - len, len + 1);
-			ft_strlcat(arr_aloc[i], (char *)arg, len + ft_strlen((char *)arg) + 2);
+			norm_rip(arr_aloc[i], s, arg, len);
 			i++;
 		}
 	}
@@ -75,8 +81,8 @@ static int	ft_str_fill(char **arr_aloc, char const *s, char c, void *arg)
 
 char	**ft_split_modded(char const *s, char c, void *arg)
 {
-	size_t		nwords;
-	char		**arr_aloc;
+	size_t	nwords;
+	char	**arr_aloc;
 
 	if (!s)
 		return (NULL);

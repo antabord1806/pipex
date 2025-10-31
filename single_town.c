@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   single_town.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 17:08:45 by antabord          #+#    #+#             */
+/*   Updated: 2025/10/31 17:23:26 by antabord         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "functions.h"
 #include "structs.h"
 
-t_comands *init_cmds(void)
+t_comands	*init_cmds(void)
 {
-	t_comands *cmds;
+	t_comands	*cmds;
 
 	cmds = malloc(sizeof(t_comands));
 	if (!cmds)
@@ -16,7 +28,7 @@ t_comands *init_cmds(void)
 
 char	**get_env(void *env)
 {
-	static char **global_env = NULL;
+	static char	**global_env = NULL;
 
 	if (env != NULL)
 		global_env = (char **)env;
@@ -25,29 +37,29 @@ char	**get_env(void *env)
 
 t_fd	*get_fd(void)
 {
-	static t_fd fd;
+	static t_fd	fd;
+
 	return (&fd);
 }
 
-t_ncmd		*get_ncmd(void)
+t_ncmd	*get_ncmd(void)
 {
-	static t_ncmd n_cmds;
+	static t_ncmd	n_cmds;
+
 	return (&n_cmds);
 }
 
 char	**get_path(void *arg)
 {
-	static char **arr;
+	static char	**arr;
 	static int	find;
-	char 	**env;
-	char	*str;
-	int		i;
-	//int		j;
+	char		**env;
+	char		*str;
+	int			i;
 
 	(void)arg;
 	str = 0;
 	i = 0;
-	//j = 0;
 	env = get_env(NULL);
 	if (!find)
 	{

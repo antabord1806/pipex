@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   functions.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 16:39:25 by antabord          #+#    #+#             */
+/*   Updated: 2025/10/31 17:10:27 by antabord         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FUNCTIONS_H
 # define FUNCTIONS_H
 
+# include "libft/libft.h"
 # include "structs.h"
 # include <fcntl.h>
-# include "libft/libft.h"
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-#include <stdbool.h>
 
 //#define NULL ((void *)0)
 
@@ -31,10 +43,10 @@ void		adding_to_lst(char *path, char *argv, t_comands **lst);
 void		ft_lstadd_back_cmd(t_comands **lst, t_comands *new);
 int			ft_lstsize_cmd(t_comands *lst);
 
-int	heredoc_handler(char *limiter);
+int			heredoc_handler(char *limiter);
 void		pipe_city(t_comands *lst, t_fd *fds);
 void		pipenstuff(t_comands *lst);
 void		ft_free_struct(t_comands *cmd);
-void	close_all(int fd1, int fd2, int fd3, int fd4);
+void		close_all(t_fd *fd);
 
 #endif

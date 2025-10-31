@@ -6,22 +6,21 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 14:46:07 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/30 18:59:38 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/31 17:13:58 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "functions.h"
 
 int	main(int argc, char *argv[], char **env)
 {
-	t_comands *cmds;
+	t_comands	*cmds;
 
- 	if (argc < 4)
+	if (argc < 4)
 	{
 		printf("not enough args\n");
 		return (0);
-	} 
+	}
 	get_env(env);
 	get_fd()->infile_fd = -1;
 	get_fd()->outfile_fd = -1;
@@ -30,8 +29,7 @@ int	main(int argc, char *argv[], char **env)
 	cmds = argument_parsing(argc, argv);
 	if (!cmds)
 		return (0);
-	//printf("going to pipe city\n");
 	pipe_city(cmds, get_fd());
-    ft_free_struct(cmds);
+	ft_free_struct(cmds);
 	return (0);
 }

@@ -6,16 +6,15 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 20:35:37 by andre             #+#    #+#             */
-/*   Updated: 2025/10/30 19:24:25 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/31 16:23:03 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "functions.h"
 
-
-static void execute_cmd(t_comands *cmd, int in, int out)
+static void	execute_cmd(t_comands *cmd, int in, int out, t_fd *fds)
 {
-	int pid;
+	int	pid;
 
 	pid = fork();
 	if (pid == 0)
@@ -24,6 +23,11 @@ static void execute_cmd(t_comands *cmd, int in, int out)
 		close(out);
 		dup2(in, STDIN_FILENO);
 		close(in);
+		if (cmd->next)
+		{
+			close(fds->outfile_fd);
+			close(fds->fd[0]);
+		}
 		execve(cmd->name, cmd->args, get_env(NULL));
 		perror("exec\n");
 		exit(EXIT_FAILURE);
@@ -32,62 +36,42 @@ static void execute_cmd(t_comands *cmd, int in, int out)
 	close(out);
 }
 
-
-pid_t	child_factory_and_waiting_room(int pid)
-{
-	pid = fork();
-	if (pid== -1)
-		return (perror("fork\n"), -1);
-	return (pid);
-}
-
-/* void	close_all(void)
-{
-	if (get_fd()->infile_fd != -1 )
-        close(get_fd()->infile_fd);
-    if (get_fd()->outfile_fd != -1)
-		close(get_fd()->outfile_fd);
-	// if (fd3 != -1 &&fd3 > 2)
-	// 	close(fd3);
-	// if (fd4 != -1 && fd4 > 2)
-	// 	close(fd4);
-} */
-
-int close_fd(int oldfd, int fd)
+int	close_fd(int oldfd, int fd)
 {
 	close(oldfd);
 	return (fd);
 }
 
-void wait_all(t_comands *cmd)
+void	wait_all(t_comands *cmd)
 {
-	 while (cmd)
-    {
-        wait(NULL);
-        cmd = cmd->next;
-    }
+	while (cmd)
+	{
+		wait(NULL);
+		cmd = cmd->next;
+	}
 }
 
 void	pipe_city(t_comands *head, t_fd *fds)
 {
-    t_comands	*cmd;
-	int in = fds->infile_fd;
-	int out;
+	t_comands	*cmd;
+	int			in;
+	int			out;
 
-    cmd = head;
-	printf("fin: %i\n", fds->infile_fd);
-    while (cmd)
-    {
+	in = fds->infile_fd;
+	cmd = head;
+	while (cmd)
+	{
 		out = dup(1);
 		if (cmd->next)
-		{	
+		{
 			pipe(fds->fd);
 			out = close_fd(out, fds->fd[1]);
-		} else
+		}
+		else
 			out = close_fd(out, fds->outfile_fd);
-		execute_cmd(cmd, in, out);
+		execute_cmd(cmd, in, out, fds);
 		in = close_fd(in, fds->fd[0]);
-        cmd = cmd->next;
-    }
-   wait_all(head);
+		cmd = cmd->next;
+	}
+	wait_all(head);
 }

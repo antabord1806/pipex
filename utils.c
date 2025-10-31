@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 17:11:12 by antabord          #+#    #+#             */
+/*   Updated: 2025/10/31 17:11:56 by antabord         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "functions.h"
 #include "structs.h"
 
@@ -33,8 +45,8 @@ int	ft_lstsize_cmd(t_comands *lst)
 
 void	ft_free_struct(t_comands *cmd)
 {
-	t_comands *tmp;
-	t_comands *next;
+	t_comands	*tmp;
+	t_comands	*next;
 
 	if (!cmd)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: antabord <antabord@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 11:38:21 by antabord          #+#    #+#             */
-/*   Updated: 2025/10/30 18:13:11 by antabord         ###   ########.fr       */
+/*   Updated: 2025/10/31 17:10:02 by antabord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,36 +34,55 @@ static char	*get_line(void)
 	}
 	if (!tmp || !*tmp)
 		return (free(tmp), NULL);
-    tmp[ft_strlen(tmp) - 1] = '\0';
+	tmp[ft_strlen(tmp) - 1] = '\0';
 	return (tmp);
+}
+
+int	infile_handler(char **argv, int argc)
+{
+	int	nb_cmd;
+	int	fd;
+
+	fd = 0;
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	{
+		nb_cmd = argc - 4;
+		heredoc_handler(argv[2]);
+	}
+	else
+	{
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
+			return (perror("Cannot access infile\n"), 0);
+		nb_cmd = argc - 3;
+		get_fd()->infile_fd = fd;
+	}
+	get_ncmd()->n_cmds = nb_cmd;
+	return (nb_cmd);
 }
 
 int	heredoc_handler(char *limiter)
 {
-	char *str;
-    int fd[2];
+	char	*str;
+	int		fd[2];
 
 	str = NULL;
-    if (pipe(fd) == -1)
-    {
-        perror("rip pipe");
-        return 0;
-    }
+	pipe(fd);
 	while (1)
 	{
 		str = get_line();
 		if (!str)
-			return 0;
-        if (!ft_strncmp(str, limiter, ft_strlen(limiter) + 1))
-        {
-            get_fd()->infile_fd = fd[0];
-            return (free(str), close(fd[1]), 1);
-        }
-        write(fd[1], str, ft_strlen(str));
-        write(fd[1], "\n", 1);
-        free(str);
+			return (0);
+		if (!ft_strncmp(str, limiter, ft_strlen(limiter) + 1))
+		{
+			get_fd()->infile_fd = fd[0];
+			return (free(str), close(fd[1]), 1);
+		}
+		write(fd[1], str, ft_strlen(str));
+		write(fd[1], "\n", 1);
+		free(str);
 	}
-    close(fd[1]);
-    get_fd()->infile_fd = fd[0];
-	return 0;
+	close(fd[1]);
+	get_fd()->infile_fd = fd[0];
+	return (0);
 }
