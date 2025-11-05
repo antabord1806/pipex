@@ -102,22 +102,6 @@ make re     # Recompila tudo do zero
 
 <hr>
 
-<h2>🧩 Estrutura do Projeto</h2>
-
-<pre><code>pipex/
-├── src/
-│   ├── pipex.c
-│   ├── utils.c
-│   ├── execute.c
-│   └── ...
-├── includes/
-│   └── pipex.h
-├── Makefile
-└── README.md
-</code></pre>
-
-<hr>
-
 <h2>🧪 Testes</h2>
 
 <h3>Testes básicos:</h3>
@@ -134,38 +118,12 @@ make re     # Recompila tudo do zero
 
 <hr>
 
-<h2>🔬 Debugging e Análise</h2>
-
-<p>Durante o desenvolvimento, as ferramentas mais úteis foram:</p>
-
-<ul>
-  <li><strong>Valgrind</strong> → deteção de <em>memory leaks</em> e uso inválido de FDs</li>
-</ul>
-
-<pre><code>valgrind --leak-check=full ./pipex infile "ls" "wc -l" outfile
-</code></pre>
-
-<ul>
-  <li><strong>Strace</strong> → rastreia chamadas de sistema e FDs abertos</li>
-</ul>
-
-<pre><code>strace -f ./pipex infile "cat" "wc -l" outfile
-</code></pre>
-
-<ul>
-  <li><strong>lsof</strong> → verifica FDs não fechados</li>
-</ul>
-
 <pre><code>lsof -p &lt;pid&gt;
 </code></pre>
 
 <p>
   Dominar estas ferramentas foi essencial para entender o ciclo de vida dos <em>file descriptors</em> e garantir que o programa se comportasse exatamente como o shell.
 </p>
-
-<hr>
-
-<h2>🛠️ Possíveis Extensões</h2>
 
 <ul>
   <li>Versão <strong>bonus</strong> com múltiplos comandos (pipeline completo).</li>
