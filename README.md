@@ -2,7 +2,10 @@
 
 <p align="center">
   <em>Projeto da 42 que replica o comportamento do pipe <code>|</code> do shell Unix.</em><br>
-  <strong>Domínio total de processos, file descriptors e redirecionamentos.</strong>
+  <img src="https://img.shields.io/badge/Language-C-blue?style=for-the-badge&logo=c"/>
+  <img src="https://img.shields.io/badge/School-42-black?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Unix-System-orange?style=for-the-badge&logo=linux"/>
+</p>
 </p>
 
 <hr>
@@ -172,15 +175,3 @@ make re     # Recompila tudo do zero
 
 <hr>
 
-<h2>👨‍💻 Autor</h2>
-
-<p>
-  Feito por <strong>teu_nome</strong>, estudante da <strong>42</strong>.<br>
-  <em>“Entender file descriptors não é sobre C — é sobre compreender o sistema operativo em si.”</em>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Language-C-blue?style=for-the-badge&logo=c"/>
-  <img src="https://img.shields.io/badge/School-42-black?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Unix-System-orange?style=for-the-badge&logo=linux"/>
-</p>
