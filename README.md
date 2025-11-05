@@ -56,11 +56,11 @@ make re     # Recompila tudo do zero
 <h2>Conceitos-Chave</h2>
 
 <ul>
-  <li><code>fork()</code> → Criação de um novo processo (filho).</li>
-  <li><code>pipe()</code> → Cria um canal de comunicação unidirecional.</li>
+  <li><code>fork()</code> → Criação de um novo processo (filho), cópia exata do pai que executa em paralelo.</li>
+  <li><code>pipe()</code> → Cria um canal de comunicação unidirecional (read -> write).</li>
   <li><code>dup2()</code> → Redireciona file descriptors, simulando <code>&lt;</code> e <code>&gt;</code>.</li>
   <li><code>execve()</code> → Substitui o processo atual por um novo programa.</li>
-  <li><code>waitpid()</code> → Garante que o processo pai espera pelos filhos.</li>
+  <li><code>waitpid()</code> → Garante que o processo pai espera pelos filhos terminarem.</li>
   <li><strong>File Descriptors (FDs)</strong> → Referências inteiras a recursos de I/O (<code>stdin=0</code>, <code>stdout=1</code>, <code>stderr=2</code>).</li>
 </ul>
 
