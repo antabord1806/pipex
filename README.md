@@ -1,4 +1,4 @@
-<h1 align="center">🧩 Pipex</h1>
+<h1 align="center">Pipex</h1>
 
 <p align="center">
   <em>Projeto da 42 que replica o comportamento do pipe <code>|</code> do shell Unix.</em><br>
@@ -7,7 +7,7 @@
 
 <hr>
 
-<h2>📘 Descrição</h2>
+<h2>Descrição</h2>
 
 <p>
   O <strong>Pipex</strong> é um projeto em C que visa reproduzir o comportamento do <em>pipe</em> (<code>|</code>) no shell Unix, permitindo a comunicação entre dois comandos através de <em>file descriptors</em>.<br>
@@ -23,7 +23,7 @@
 
 <hr>
 
-<h2>⚙️ Compilação</h2>
+<h2>Compilação</h2>
 
 <pre><code>make        # Compila o executável pipex
 make clean  # Remove arquivos .o
@@ -33,7 +33,7 @@ make re     # Recompila tudo do zero
 
 <hr>
 
-<h2>🚀 Execução</h2>
+<h2>Execução</h2>
 
 <pre><code>./pipex infile "ls -l" "wc -l" outfile
 </code></pre>
@@ -53,7 +53,7 @@ make re     # Recompila tudo do zero
 
 <hr>
 
-<h2>🧠 Conceitos-Chave</h2>
+<h2>Conceitos-Chave</h2>
 
 <ul>
   <li><code>fork()</code> → Criação de um novo processo (filho).</li>
@@ -66,7 +66,7 @@ make re     # Recompila tudo do zero
 
 <hr>
 
-<h2>💥 Maiores Desafios</h2>
+<h2>Maiores Desafios</h2>
 
 <p>
   O ponto mais complexo foi <strong>entender profundamente os file descriptors (FDs)</strong> e como o sistema Unix os utiliza.
