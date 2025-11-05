@@ -92,7 +92,7 @@ make re     # Recompila tudo do zero
 </p>
 
 <p>
-  <img src="./Tranferências/Diagrama sem nome.png" alt="Esquema de fds" width="600"/>
+  <img src="Diagrama sem nome.drawio.png" alt="Esquema de fds" width="600"/>
   <br>
   <em>Figura 1 — Fluxo de execução e comunicação via pipe</em>
 </p>
