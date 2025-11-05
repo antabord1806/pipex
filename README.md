@@ -86,10 +86,15 @@ make re     # Recompila tudo do zero
   O desafio está em compreender que <strong>duplicar um FD não copia os dados, apenas aponta para o mesmo recurso</strong> — e isso pode gerar confusão se não forem fechadas as extremidades corretas em cada processo.
 </p>
 
-<h3>🔍 Exemplo prático de erro clássico:</h3>
+<h3>A solução:</h3>
 <p>
-  Se esquecermos de fechar <code>fd[1]</code> no processo que apenas lê, o <em>pipe</em> nunca fecha corretamente e o processo bloqueia indefinidamente à espera de EOF.
-  Resolver isso exigiu disciplina e rastreamento cuidadoso de cada <em>fd</em>.
+  Esquematizar o que acontece com os fds duante o processo sabendo assim quando eq eles deixam de ser utilzados
+</p>
+
+<p>
+  <img src="./Tranferências/Diagrama sem nome.png" alt="Esquema de fds" width="600"/>
+  <br>
+  <em>Figura 1 — Fluxo de execução e comunicação via pipe</em>
 </p>
 
 <hr>
