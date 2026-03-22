@@ -1,97 +1,96 @@
 <h1 align="center">Pipex</h1>
 
 <p align="center">
-  <em>Projeto da 42 que replica o comportamento do pipe <code>|</code> do shell Unix.</em><br>
+  <em>42 project that replicates the behavior of the Unix shell <code>|</code> pipe.</em><br>
   <img src="https://img.shields.io/badge/Language-C-blue?style=for-the-badge&logo=c"/>
   <img src="https://img.shields.io/badge/School-42-black?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Unix-System-orange?style=for-the-badge&logo=linux"/>
 </p>
-</p>
 
 <hr>
 
-<h2>Descrição</h2>
+<h2>Description</h2>
 
 <p>
-  O <strong>Pipex</strong> é um projeto em C que visa reproduzir o comportamento do <em>pipe</em> (<code>|</code>) no shell Unix, permitindo a comunicação entre dois comandos através de <em>file descriptors</em>.<br>
-  A ideia é recriar este comportamento:
+  <strong>Pipex</strong> is a C project that aims to reproduce the behavior of the <em>pipe</em> (<code>|</code>) in Unix shell, allowing communication between two commands through <em>file descriptors</em>.<br>
+  The idea is to recreate this behavior:
 </p>
 
 <pre><code>&lt; infile cmd1 | cmd2 &gt; outfile
 </code></pre>
 
 <p>
-  Ou seja, o programa deve ler de um ficheiro, executar dois comandos em cadeia e escrever o resultado num ficheiro de saída.
+  In other words, the program should read from a file, execute two chained commands, and write the result to an output file.
 </p>
 
 <hr>
 
-<h2>Compilação</h2>
+<h2>Compilation</h2>
 
-<pre><code>make        # Compila o executável pipex
-make clean  # Remove arquivos .o
-make fclean # Remove objetos e executável
-make re     # Recompila tudo do zero
+<pre><code>make        # Compiles the pipex executable
+make clean  # Removes .o files
+make fclean # Removes objects and the executable
+make re     # Recompiles everything from scratch
 </code></pre>
 
 <hr>
 
-<h2>Execução</h2>
+<h2>Execution</h2>
 
 <pre><code>./pipex infile "ls -l" "wc -l" outfile
 </code></pre>
 
-<p>Este comando deve replicar o comportamento:</p>
+<p>This command should replicate the behavior:</p>
 
 <pre><code>&lt; infile ls -l | wc -l &gt; outfile
 </code></pre>
 
-<h3>Argumentos:</h3>
+<h3>Arguments:</h3>
 <ul>
-  <li><strong>infile</strong> — ficheiro de entrada</li>
-  <li><strong>cmd1</strong> — primeiro comando a executar</li>
-  <li><strong>cmd2</strong> — segundo comando, que recebe a saída do primeiro</li>
-  <li><strong>outfile</strong> — ficheiro de saída</li>
+  <li><strong>infile</strong> — input file</li>
+  <li><strong>cmd1</strong> — first command to execute</li>
+  <li><strong>cmd2</strong> — second command, receives the output of the first</li>
+  <li><strong>outfile</strong> — output file</li>
 </ul>
 
 <hr>
 
-<h2>Conceitos-Chave</h2>
+<h2>Key Concepts</h2>
 
 <ul>
-  <li><code>fork()</code> → Criação de um novo processo (filho), cópia do pai que executa em paralelo.</li>
-  <li><code>pipe()</code> → Cria um canal de comunicação (read -> write).</li>
-  <li><code>dup2()</code> → Redireciona file descriptors <code>&lt;</code> e <code>&gt;</code>.</li>
-  <li><code>execve()</code> → Substitui o processo atual por um novo programa.</li>
-  <li><code>waitpid()</code> → Garante que o processo pai espera pelos filhos terminarem.</li>
-  <li><strong>File Descriptors (FDs)</strong> → Referências inteiras a recursos de I/O (<code>stdin=0</code>, <code>stdout=1</code>, <code>stderr=2</code>).</li>
+  <li><code>fork()</code> → Creation of a new process (child), a copy of the parent executing in parallel.</li>
+  <li><code>pipe()</code> → Creates a communication channel (read -> write).</li>
+  <li><code>dup2()</code> → Redirects file descriptors <code>&lt;</code> and <code>&gt;</code>.</li>
+  <li><code>execve()</code> → Replaces the current process with a new program.</li>
+  <li><code>waitpid()</code> → Ensures that the parent process waits for children to finish.</li>
+  <li><strong>File Descriptors (FDs)</strong> → Integer references to I/O resources (<code>stdin=0</code>, <code>stdout=1</code>, <code>stderr=2</code>).</li>
 </ul>
 
 <hr>
 
-<h2>Maiores Desafios</h2>
+<h2>Major Challenges</h2>
 
 <p>
-  O ponto mais complexo foi <strong>entender os file descriptors (FDs)</strong> e como o sistema Unix os utiliza.
+  The most complex part was <strong>understanding file descriptors (FDs)</strong> and how the Unix system uses them.
 </p>
 
 <p>
-  Cada processo possui a sua própria tabela de descritores. Quando criamos um <em>pipe</em>, o kernel fornece dois descritores:
+  Each process has its own descriptor table. When we create a <em>pipe</em>, the kernel provides two descriptors:
 </p>
 
 <ul>
-  <li><code>fd[0]</code>: extremidade de leitura</li>
-  <li><code>fd[1]</code>: extremidade de escrita</li>
+  <li><code>fd[0]</code>: read end</li>
+  <li><code>fd[1]</code>: write end</li>
 </ul>
 
 <p>
-  Com o <code>dup2(fd[x], STDIN_FILENO)</code> ou <code>dup2(fd[x], STDOUT_FILENO)</code>, redirecionamos as entradas e saídas de um processo.
-  O desafio está em compreender que <strong>duplicar um FD não copia os dados, apenas aponta para o mesmo recurso</strong> — e isso pode gerar confusão se não forem fechadas as extremidades corretas em cada processo.
+  With <code>dup2(fd[x], STDIN_FILENO)</code> or <code>dup2(fd[x], STDOUT_FILENO)</code>, we redirect the input and output of a process.
+  The challenge is to understand that <strong>duplicating an FD does not copy the data, it only points to the same resource</strong> — and this can cause confusion if the correct ends are not closed in each process.
 </p>
 
-<h3>A solução:</h3>
+<h3>The solution:</h3>
 <p>
-  Esquematizar o que acontece com os fds duante o processo sabendo assim quando eq eles deixam de ser utilzados
+  Draw schematics of what happens to the FDs during the process to know exactly when they stop being used.
 </p>
 
 <table align="center">
@@ -130,16 +129,16 @@ make re     # Recompila tudo do zero
 
 <hr>
 
-<h2>🧪 Testes</h2>
+<h2>🧪 Tests</h2>
 
-<h3>Testes básicos:</h3>
+<h3>Basic tests:</h3>
 
 <pre><code>./pipex infile "cat" "grep text" outfile
 ./pipex infile "grep a" "wc -l" outfile
 ./pipex /dev/null "echo hello" "cat" outfile
 </code></pre>
 
-<h3>Comparar com o comportamento real do shell:</h3>
+<h3>Compare with actual shell behavior:</h3>
 
 <pre><code>diff &lt;(./pipex infile "cmd1" "cmd2" outfile) &lt;(&lt; infile cmd1 | cmd2 &gt; outfile)
 </code></pre>
@@ -150,14 +149,13 @@ make re     # Recompila tudo do zero
 </code></pre>
 
 <p>
-  Dominar estas ferramentas foi essencial para entender o ciclo de vida dos <em>file descriptors</em> e garantir que o programa se comportasse exatamente como o shell.
+  Mastering these tools was essential to understanding the lifecycle of <em>file descriptors</em> and ensuring the program behaves exactly like the shell.
 </p>
 
 <ul>
-  <li>Versão <strong>bonus</strong> com múltiplos comandos (pipeline completo).</li>
-  <li>Suporte a <em>heredoc</em> (<code>&lt;&lt;</code>).</li>
-  <li>Tratamento avançado de erros e mensagens personalizadas.</li>
+  <li><strong>Bonus</strong> version with multiple commands (full pipeline).</li>
+  <li>Support for <em>heredoc</em> (<code>&lt;&lt;</code>).</li>
+  <li>Advanced error handling and custom messages.</li>
 </ul>
 
 <hr>
-
