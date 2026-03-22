@@ -9,22 +9,6 @@
 
 <hr>
 
-<h2>Description</h2>
-
-<p>
-  <strong>Pipex</strong> is a C project that aims to reproduce the behavior of the <em>pipe</em> (<code>|</code>) in Unix shell, allowing communication between two commands through <em>file descriptors</em>.<br>
-  The idea is to recreate this behavior:
-</p>
-
-<pre><code>&lt; infile cmd1 | cmd2 &gt; outfile
-</code></pre>
-
-<p>
-  In other words, the program should read from a file, execute two chained commands, and write the result to an output file.
-</p>
-
-<hr>
-
 <h2>Compilation</h2>
 
 <pre><code>make        # Compiles the pipex executable
