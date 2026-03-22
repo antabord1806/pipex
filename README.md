@@ -59,9 +59,9 @@ make re     # Recompila tudo do zero
 <h2>Conceitos-Chave</h2>
 
 <ul>
-  <li><code>fork()</code> → Criação de um novo processo (filho), cópia exata do pai que executa em paralelo.</li>
-  <li><code>pipe()</code> → Cria um canal de comunicação unidirecional (read -> write).</li>
-  <li><code>dup2()</code> → Redireciona file descriptors, simulando <code>&lt;</code> e <code>&gt;</code>.</li>
+  <li><code>fork()</code> → Criação de um novo processo (filho), cópia do pai que executa em paralelo.</li>
+  <li><code>pipe()</code> → Cria um canal de comunicação (read -> write).</li>
+  <li><code>dup2()</code> → Redireciona file descriptors <code>&lt;</code> e <code>&gt;</code>.</li>
   <li><code>execve()</code> → Substitui o processo atual por um novo programa.</li>
   <li><code>waitpid()</code> → Garante que o processo pai espera pelos filhos terminarem.</li>
   <li><strong>File Descriptors (FDs)</strong> → Referências inteiras a recursos de I/O (<code>stdin=0</code>, <code>stdout=1</code>, <code>stderr=2</code>).</li>
@@ -72,7 +72,7 @@ make re     # Recompila tudo do zero
 <h2>Maiores Desafios</h2>
 
 <p>
-  O ponto mais complexo foi <strong>entender profundamente os file descriptors (FDs)</strong> e como o sistema Unix os utiliza.
+  O ponto mais complexo foi <strong>entender os file descriptors (FDs)</strong> e como o sistema Unix os utiliza.
 </p>
 
 <p>
