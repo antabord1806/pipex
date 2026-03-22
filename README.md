@@ -105,20 +105,26 @@ make re     # Recompila tudo do zero
 
   <tr>
     <td>cmd1</td>
-    <td>cmd2</td>
-    <td>cmd3</td>
-  </tr>
-
-  <tr>
     <td>0/1</td>
-    <td>0/1</td>
-    <td>0/1</td>
-  </tr>
-
-  <tr>
     <td>infile_fd</td>
     <td>4</td>
+    <td>3/4</td>
+  </tr>
+
+  <tr>
+    <td>cmd2</td>
+    <td>0/1</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5/6</td>
+  </tr>
+
+  <tr>
+    <td>cmd3</td>
+    <td>0/1</td>
     <td>6</td>
+    <td>outfile_fd</td>
+    <td>X</td>
   </tr>
 </table>
 <p>
