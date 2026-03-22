@@ -1,7 +1,6 @@
 <h1 align="center">Pipex</h1>
 
 <p align="center">
-  <em>42 project that replicates the behavior of the Unix shell <code>|</code> pipe.</em><br>
   <img src="https://img.shields.io/badge/Language-C-blue?style=for-the-badge&logo=c"/>
   <img src="https://img.shields.io/badge/School-42-black?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Unix-System-orange?style=for-the-badge&logo=linux"/>
