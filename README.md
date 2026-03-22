@@ -94,6 +94,33 @@ make re     # Recompila tudo do zero
   Esquematizar o que acontece com os fds duante o processo sabendo assim quando eq eles deixam de ser utilzados
 </p>
 
+<table align="center">
+  <tr>
+    <th>Infile</th>
+    <th>StdIn/StdOut - default</th>
+    <th>fd_In</th>
+    <th>fd_Out</th>
+    <th>pipe (read/write)</th>
+  </tr>
+
+  <tr>
+    <td>cmd1</td>
+    <td>cmd2</td>
+    <td>cmd3</td>
+  </tr>
+
+  <tr>
+    <td>0/1</td>
+    <td>0/1</td>
+    <td>0/1</td>
+  </tr>
+
+  <tr>
+    <td>infile_fd</td>
+    <td>4</td>
+    <td>6</td>
+  </tr>
+</table>
 <p>
   <img src="Diagrama sem nome.drawio.svg" alt="Esquema de fds" width="600"/>
   <br>
