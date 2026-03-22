@@ -99,7 +99,7 @@ make re     # Recompila tudo do zero
     <th>Infile</th>
     <th>StdIn/StdOut - default</th>
     <th>fd_In</th>
-    <th>fd_Out</th>
+    <th>fd_out</th>
     <th>pipe (read/write)</th>
   </tr>
 
@@ -124,14 +124,9 @@ make re     # Recompila tudo do zero
     <td>0/1</td>
     <td>6</td>
     <td>outfile_fd</td>
-    <td>X</td>
+    <td>  </td>
   </tr>
 </table>
-<p>
-  <img src="Diagrama sem nome.drawio.svg" alt="Esquema de fds" width="600"/>
-  <br>
-  <em>Figura 1 — Fluxo de execução e comunicação via pipe</em>
-</p>
 
 <hr>
 
