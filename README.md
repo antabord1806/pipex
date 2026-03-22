@@ -113,7 +113,7 @@ make re     # Recompiles everything from scratch
 
 <hr>
 
-<h2>🧪 Tests</h2>
+<h2>Tests</h2>
 
 <h3>Basic tests:</h3>
 
