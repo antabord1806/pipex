@@ -7,8 +7,6 @@
   <img src="https://img.shields.io/badge/Unix-System-orange?style=for-the-badge&logo=linux"/>
 </p>
 
-<hr>
-
 <h2>Compilation</h2>
 
 <pre><code>make        # Compiles the pipex executable
@@ -111,8 +109,6 @@ make re     # Recompiles everything from scratch
   </tr>
 </table>
 
-<hr>
-
 <h2>Tests</h2>
 
 <h3>Basic tests:</h3>
@@ -127,8 +123,6 @@ make re     # Recompiles everything from scratch
 <pre><code>diff &lt;(./pipex infile "cmd1" "cmd2" outfile) &lt;(&lt; infile cmd1 | cmd2 &gt; outfile)
 </code></pre>
 
-<hr>
-
 <pre><code>lsof -p &lt;pid&gt;
 </code></pre>
 
@@ -141,5 +135,3 @@ make re     # Recompiles everything from scratch
   <li>Support for <em>heredoc</em> (<code>&lt;&lt;</code>).</li>
   <li>Advanced error handling and custom messages.</li>
 </ul>
-
-<hr>
